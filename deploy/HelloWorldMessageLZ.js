@@ -1,4 +1,4 @@
-const LZ_ENDPOINTS = require("../constants/lzEndpoints.json")
+const LZ_ENDPOINTS = require("../constants/layerzeroEndpoints.json")
 
 module.exports = async function ({ deployments, getNamedAccounts }) {
     const { deploy } = deployments
@@ -9,7 +9,7 @@ module.exports = async function ({ deployments, getNamedAccounts }) {
     const endpointAddr = LZ_ENDPOINTS[hre.network.name]
     console.log(`[${hre.network.name}] Endpoint address: ${endpointAddr}`)
 
-    await deploy("OmniCounter", {
+    await deploy("HelloWorldMessageLZ", {
         from: deployer,
         args: [endpointAddr],
         log: true,
@@ -17,4 +17,4 @@ module.exports = async function ({ deployments, getNamedAccounts }) {
     })
 }
 
-module.exports.tags = ["OmniCounter"]
+module.exports.tags = ["HelloWorldMessageLZ"]
