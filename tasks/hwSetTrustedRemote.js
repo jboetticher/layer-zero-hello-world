@@ -10,7 +10,13 @@ module.exports = async function (taskArgs, hre) {
 
     // setTrustedRemote() on the local contract, so it can receive message from the source contract
     try {
-        let tx = await (await helloWorld.setTrustedRemote(dstChainId, dstAddr)).wait()
+        const destinationAndLocal = hre.ethers.utils.solidityPack(
+            ['address','address'],
+            [dstAddr, helloWorld.address]
+        );
+
+        console.log(dstChainId, dstAddr);
+        let tx = await (await helloWorld.setTrustedRemote(dstChainId, destinationAndLocal)).wait()
         console.log(`✅ [${hre.network.name}] setTrustedRemote(${dstChainId}, ${dstAddr})`)
         console.log(` tx: ${tx.transactionHash}`)
     } catch (e) {

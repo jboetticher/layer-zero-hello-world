@@ -17,9 +17,16 @@ contract HelloWorldMessageLZ is NonblockingLzApp {
 
     function sendMessage(string memory message, uint16 destChainId) external payable {
         bytes memory payload = abi.encode(msg.sender, message);
-        _lzSend(destChainId, payload, payable(msg.sender), address(0x0), bytes(""), msg.value);
+        _lzSend({
+            _dstChainId: destChainId, 
+            _payload: payload, 
+            _refundAddress: payable(msg.sender), 
+            _zroPaymentAddress: address(0x0), 
+            _adapterParams: bytes(""), 
+            _nativeFee: msg.value}
+        );
     }
 }
 
-// Moonbase Alpha: 0x2dCBc8a932E62712dd6a26A4F38Fe4Ff1E4F6C22
-// Fantom Testnet: 0xa57194Dda16d7ec147A13E5Af28d52190A6d5461
+// Moonbase Alpha: 0xCaE75D43cFd8e26ab44cc4f95dBcF3438015F462
+// Fantom Testnet: 0x86D5C5b145C782D94383f170f5080BbA104D3D25
